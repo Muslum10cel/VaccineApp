@@ -20,9 +20,4 @@ public class VaccineApp {
 	public boolean register(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "log_in_level") int log_in_level) {
 		return true;
 	}
-
-	@WebMethod(operationName = "checkConnection")
-	public String checkConnection() {
-		return DBOperations.openConnection();
-	}
 }

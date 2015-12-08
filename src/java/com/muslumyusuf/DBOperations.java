@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.muslumyusuf;
+package com.muslumyusuf;	
 
 import com.mysql.jdbc.Connection;
 import java.sql.CallableStatement;
@@ -25,17 +25,15 @@ public class DBOperations {
 	private static CallableStatement callableStatement = null;
 	private static ResultSet resultSet = null;
 
-	public static String openConnection() {
+	public static void openConnection() {
 		try {
 			Class.forName(Initialize.CLASS_NAME);
 			connection = (Connection) DriverManager.getConnection(Initialize.DB_URL, Initialize.USERNAME, Initialize.PASSWORD);
 			if (connection != null) {
-				return "connected";
 			}
 		} catch (ClassNotFoundException | SQLException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return "not Connected";
 	}
 
 }
