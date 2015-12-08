@@ -11,11 +11,13 @@ package com.muslumyusuf;
  */
 public class Flags {
 
+	public static final int USER_FLAG = 0;
+
 	public static final int ZERO_FLAG = 0;
 	public static final int ONE_FLAG = 1;
 	public static final int TWO_FLAG = 2;
 	public static final int THREE_FLAG = 3;
 	public static final int FOUR_FLAG = 4;
 	public static final int FIVE_FLAG = 5;
-	
+
 }

@@ -16,8 +16,15 @@ import javax.jws.WebParam;
 @WebService(serviceName = "VaccineApp")
 public class VaccineApp {
 
+	private final static DBOperations dBOperations = new DBOperations();
+
 	@WebMethod(operationName = "register")
-	public boolean register(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "log_in_level") int log_in_level) {
-		return true;
+	public int register(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
+		return dBOperations.register(username, password);
+	}
+
+	@WebMethod(operationName = "log-in")
+	public int logIn(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
+		return dBOperations.logIn(username, password);
 	}
 }
