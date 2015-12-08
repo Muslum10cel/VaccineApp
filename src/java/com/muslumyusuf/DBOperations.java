@@ -127,7 +127,20 @@ public class DBOperations {
 		return -1;
 	}
 
-	public synchronized int addBaby(String username, String baby_name, Date date_of_birth) {
+	public synchronized int addBaby(String username, String baby_name, String date_of_birth) {
+		try {
+			openConnection();
+			callableStatement = connection.prepareCall(DbStoredProcedures.ADD_BABY);
+			callableStatement.setString(1, username);
+			callableStatement.setString(2, baby_name);
+			callableStatement.setString(3, date_of_birth);
+			callableStatement.executeQuery();
+			return 1;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
+		}
 		return -1;
 	}
 
