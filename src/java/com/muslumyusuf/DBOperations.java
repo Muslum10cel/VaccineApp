@@ -148,8 +148,8 @@ public class DBOperations {
 
 			callableStatement = connection.prepareCall(DbStoredProcedures.ADD_VACCINES);
 			callableStatement.setString(1, baby_name);
-			callableStatement.setString(3, calculateBcg(date_of_birth));
-			callableStatement.setString(2, calculateVaricella(date_of_birth));
+			callableStatement.setString(2, calculateBcg(date_of_birth));
+			callableStatement.setString(3, calculateVaricella(date_of_birth));
 			callableStatement.executeQuery();
 
 			callableStatement = calculateDaBT_IPA_HIB(connection, baby_name, date_of_birth);
