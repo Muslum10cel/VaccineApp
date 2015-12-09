@@ -8,6 +8,8 @@ package com.muslumyusuf;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.ws.rs.Produces;
+import org.json.JSONObject;
 
 /**
  *
@@ -23,14 +25,64 @@ public class VaccineApp {
 		return dBOperations.register(username, password);
 	}
 
-	@WebMethod(operationName = "log-in")
+	@WebMethod(operationName = "log_in")
 	public int logIn(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
 		return dBOperations.logIn(username, password);
 	}
 
-	@WebMethod(operationName = "add-Baby")
-	public int addBaby(String username, String baby_name, String date_of_birth) {
+	@WebMethod(operationName = "add_Baby")
+	public int addBaby(@WebParam(name = "username") String username, @WebParam(name = "baby_name") String baby_name, @WebParam(name = "date_of_birth") String date_of_birth) {
 		return dBOperations.addBaby(username, baby_name, date_of_birth);
 	}
 
+	@WebMethod(operationName = "update_DaBT_IPA_HIB")
+	public int update_DaBT_IPA_HIB(@WebParam(name = "baby_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_DaBT_IPA_HIB(baby_name, flag);
+	}
+
+	@WebMethod(operationName = "update_Hepatit_A")
+	public int update_Hepatit_A(@WebParam(name = "baby_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_Hepatit_A(baby_name, flag);
+	}
+
+	@WebMethod(operationName = "update_Hepatit_B")
+	public int update_Hepatit_B(@WebParam(name = "baby_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_Hepatit_B(baby_name, flag);
+	}
+
+	@WebMethod(operationName = "update_KKK")
+	public int update_KKK(@WebParam(name = "baby_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_KKK(baby_name, flag);
+	}
+
+	@WebMethod(operationName = "update_KPA")
+	public int update_KPA(@WebParam(name = "baby_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_KPA(baby_name, flag);
+	}
+
+	@WebMethod(operationName = "update_OPA")
+	public int update_OPA(@WebParam(name = "baby_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_OPA(baby_name, flag);
+	}
+
+	@WebMethod(operationName = "update_RVA")
+	public int update_RVA(@WebParam(name = "baby_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_RVA(baby_name, flag);
+	}
+
+	@WebMethod(operationName = "update_Vaccines")
+	public int update_Vaccines(@WebParam(name = "babay_name") String baby_name, @WebParam(name = "flag") int flag) {
+		return dBOperations.update_Vaccines(baby_name, flag);
+	}
+
+	@Produces("application/json")
+	@WebMethod(operationName = "get_Completed_Vaccines")
+	public JSONObject getCompletedVaccines(@WebParam(name = "baby_name") String baby_name) {
+		return dBOperations.completedAndIncompletedVaccines(baby_name);
+	}
+
+	@WebMethod(operationName = "addComment")
+	public int addComment(@WebParam(name = "username") String username, @WebParam(name = "vaccine_name") String vaccine_name, @WebParam(name = "comment") String comment) {
+		return dBOperations.addComment(username, vaccine_name, comment);
+	}
 }
