@@ -155,7 +155,7 @@ public class DBOperations {
 			callableStatement = calculateDaBT_IPA_HIB(connection, baby_name, date_of_birth);
 			callableStatement.executeQuery();
 
-			callableStatement = calculateHepattit_A(connection, baby_name, date_of_birth);
+			callableStatement = calculateHepatit_A(connection, baby_name, date_of_birth);
 			callableStatement.executeQuery();
 
 			callableStatement = calculateHepatit_B(connection, baby_name, date_of_birth);
@@ -249,7 +249,7 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateHepattit_A(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateHepatit_A(Connection connection, String baby_name, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
