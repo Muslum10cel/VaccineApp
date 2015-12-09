@@ -173,6 +173,10 @@ public class DBOperations {
 			callableStatement = calculateRVA(connection, baby_name, date_of_birth);
 			callableStatement.executeQuery();
 
+			callableStatement = connection.prepareCall(DbStoredProcedures.SET_FALSE_ALL_VACCINES_STATUS);
+			callableStatement.setString(1, baby_name);
+			callableStatement.executeQuery();
+
 			return 1;
 		} catch (SQLException | ParseException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
