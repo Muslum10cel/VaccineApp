@@ -459,6 +459,34 @@ public class DBOperations {
 		return null;
 	}
 
+	public synchronized int forgottenPassword(String username, String newPassword) {
+		try {
+			int userAvailable = 0;
+			openConnection();
+			preparedStatement = connection.prepareStatement(DbFunctions.CHECK_USER_FUNCTION);
+			preparedStatement.setString(1, username);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					userAvailable = resultSet.getInt(1);
+				}
+			}
+			if (userAvailable == 1) {
+				callableStatement = connection.prepareCall(DbStoredProcedures.FORGOTTEN_PASSWORD);
+				callableStatement.setString(1, username);
+				callableStatement.setString(2, passToHash(newPassword));
+				return 1;
+			} else {
+				return userAvailable;
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
+		}
+		return -1;
+	}
+
 	private void closeEverything() {
 		try {
 			connection.close();
