@@ -27,4 +27,10 @@ public class VaccineApp {
 	public int logIn(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
 		return dBOperations.logIn(username, password);
 	}
+
+	@WebMethod(operationName = "add-Baby")
+	public int addBaby(String username, String baby_name, String date_of_birth) {
+		return dBOperations.addBaby(username, baby_name, date_of_birth);
+	}
+
 }
