@@ -54,12 +54,18 @@ public class DBOperations {
 		}
 	}
 
-	/*
-	 In register method we register user and check registration successful or not.
-	 First of all, we have encrypt password to SHA-256.Callable statement is used for consuming stored procedures.
-	 For registration, we use a stored procedure called "Register" with callableStatement. Then we set our data to callableStatement.
-	 To check registration, we use 0,-1 and 1. If system fails, return -1, if username is available return 1, if registration is successfull
-	 return 0.
+	/**
+	 * In register method we register user and check registration successful
+	 * or not. First of all, we have encrypt password to SHA-256.Callable
+	 * statement is used for consuming stored procedures. For registration,
+	 * we use a stored procedure called "Register" with callableStatement.
+	 * Then we set our data to callableStatement. To check registration, we
+	 * use 0,-1 and 1. If system fails, return -1, if username is available
+	 * return 1, if registration is successfull return 0.
+	 *
+	 * @param username
+	 * @param password
+	 * @return Registration is successfull or not
 	 */
 	public synchronized int register(String username, String password) {
 		int userAvailable = 0, registered = -1;
@@ -91,12 +97,18 @@ public class DBOperations {
 		return registered;
 	}
 
-	/*
-	 In logIn method we take username and password of user as parameter.
-	 First of all, We consume check user function to check user is available in database or not.
-	 If user is already in database, method will return 1.
-	 If not, we invoke log in function with username and password and if password is ok wil return 0.
-	 If there is an exception it will return -1.
+	/**
+	 * In logIn method we take username and password of user as parameter.
+	 * First of all, We consume check user function to check user is
+	 * available in database or not. If user is already in database, method
+	 * will return 1. If not, we invoke log in function with username and
+	 * password and if password is ok will return 0. If there is an
+	 * exception it will return -1.
+	 *
+	 * @param username
+	 * @param password
+	 * @return
+	 *
 	 */
 	public synchronized int logIn(String username, String password) {
 		int userAvailable = 0;
