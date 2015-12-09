@@ -33,15 +33,15 @@ public class DBOperations {
 	private static CallableStatement callableStatement = null;
 	private static ResultSet resultSet = null;
 
-	private static final Integer[] HEPATIT_B_DATES = {0, 30, 180};
-	private static final Integer[] BCG_DATES = {60};
-	private static final Integer[] DaBT_IPA_HIB_DATES = {60, 120, 180, 540};
-	private static final Integer[] OPA_DATES = {180, 540};
-	private static final Integer[] KPA_DATES = {60, 120, 180, 360};
-	private static final Integer[] KKK_DATES = {360};
-	private static final Integer[] VARICELLA_DATES = {360};
-	private static final Integer[] HEPATIT_A_DATES = {540, 720};
-	private static final Integer[] RVA_DATES = {60, 120, 180};
+	private final Integer[] HEPATIT_B_DATES = {0, 30, 180};
+	private final Integer[] BCG_DATES = {60};
+	private final Integer[] DaBT_IPA_HIB_DATES = {60, 120, 180, 540};
+	private final Integer[] OPA_DATES = {180, 540};
+	private final Integer[] KPA_DATES = {60, 120, 180, 360};
+	private final Integer[] KKK_DATES = {360};
+	private final Integer[] VARICELLA_DATES = {360};
+	private final Integer[] HEPATIT_A_DATES = {540, 720};
+	private final Integer[] RVA_DATES = {60, 120, 180};
 
 	private static void openConnection() {
 		try {
@@ -151,8 +151,27 @@ public class DBOperations {
 			callableStatement.setString(3, calculateBcg(date_of_birth));
 			callableStatement.setString(2, calculateVaricella(date_of_birth));
 			callableStatement.executeQuery();
-			
-			
+
+			callableStatement = calculateDaBT_IPA_HIB(connection, baby_name, date_of_birth);
+			callableStatement.executeQuery();
+
+			callableStatement = calculateHepattit_A(connection, baby_name, date_of_birth);
+			callableStatement.executeQuery();
+
+			callableStatement = calculateHepatit_B(connection, baby_name, date_of_birth);
+			callableStatement.executeQuery();
+
+			callableStatement = calculateKKK(connection, baby_name, date_of_birth);
+			callableStatement.executeQuery();
+
+			callableStatement = calculateKPA(connection, baby_name, date_of_birth);
+			callableStatement.executeQuery();
+
+			callableStatement = calculateOPA(connection, baby_name, date_of_birth);
+			callableStatement.executeQuery();
+
+			callableStatement = calculateRVA(connection, baby_name, date_of_birth);
+			callableStatement.executeQuery();
 
 			return 1;
 		} catch (SQLException | ParseException ex) {
@@ -209,5 +228,138 @@ public class DBOperations {
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, BCG_DATES[0]);
 		return dateFormat.format(calendar.getTime());
+	}
+
+	private CallableStatement calculateDaBT_IPA_HIB(Connection connection, String baby_name, String dateTemp) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(dateTemp)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			tempCall.setString(1, baby_name);
+			for (int i = 0; i < DaBT_IPA_HIB_DATES.length; i++) {
+				calendar.add(Calendar.DATE, DaBT_IPA_HIB_DATES[i]);
+				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+			}
+			return tempCall;
+		} catch (SQLException | ParseException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
+
+	private CallableStatement calculateHepattit_A(Connection connection, String baby_name, String date_of_birth) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			tempCall.setString(1, baby_name);
+			for (int i = 0; i < HEPATIT_A_DATES.length; i++) {
+				calendar.add(Calendar.DATE, HEPATIT_A_DATES[i]);
+				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+			}
+			return tempCall;
+		} catch (SQLException | ParseException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
+
+	private CallableStatement calculateHepatit_B(Connection connection, String baby_name, String date_of_birth) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			tempCall.setString(1, baby_name);
+			for (int i = 0; i < HEPATIT_B_DATES.length; i++) {
+				calendar.add(Calendar.DATE, HEPATIT_B_DATES[i]);
+				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+			}
+			return tempCall;
+		} catch (SQLException | ParseException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
+
+	private CallableStatement calculateKKK(Connection connection, String baby_name, String date_of_birth) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			tempCall.setString(1, baby_name);
+			for (int i = 0; i < KKK_DATES.length; i++) {
+				calendar.add(Calendar.DATE, KKK_DATES[i]);
+				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+			}
+			return tempCall;
+		} catch (SQLException | ParseException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
+
+	private CallableStatement calculateKPA(Connection connection, String baby_name, String date_of_birth) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			tempCall.setString(1, baby_name);
+			for (int i = 0; i < KPA_DATES.length; i++) {
+				calendar.add(Calendar.DATE, KPA_DATES[i]);
+				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+			}
+			return tempCall;
+		} catch (SQLException | ParseException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
+
+	private CallableStatement calculateOPA(Connection connection, String baby_name, String date_of_birth) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			tempCall.setString(1, baby_name);
+			for (int i = 0; i < OPA_DATES.length; i++) {
+				calendar.add(Calendar.DATE, KKK_DATES[i]);
+				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+			}
+			return tempCall;
+		} catch (SQLException | ParseException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
+
+	private CallableStatement calculateRVA(Connection connection, String baby_name, String date_of_birth) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			tempCall.setString(1, baby_name);
+			for (int i = 0; i < RVA_DATES.length; i++) {
+				calendar.add(Calendar.DATE, RVA_DATES[i]);
+				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+			}
+			return tempCall;
+		} catch (SQLException | ParseException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
 	}
 }
