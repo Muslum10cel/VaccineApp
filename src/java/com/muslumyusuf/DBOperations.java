@@ -17,10 +17,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -147,8 +145,17 @@ public class DBOperations {
 			callableStatement.setString(2, baby_name);
 			callableStatement.setString(3, date_of_birth);
 			callableStatement.executeQuery();
+
+			callableStatement = connection.prepareCall(DbStoredProcedures.ADD_VACCINES);
+			callableStatement.setString(1, baby_name);
+			callableStatement.setString(3, calculateBcg(date_of_birth));
+			callableStatement.setString(2, calculateVaricella(date_of_birth));
+			callableStatement.executeQuery();
+			
+			
+
 			return 1;
-		} catch (SQLException ex) {
+		} catch (SQLException | ParseException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			closeEverything();
@@ -184,5 +191,23 @@ public class DBOperations {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return hashedPassword;
+	}
+
+	private String calculateVaricella(String dateTemp) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(dateTemp)));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, VARICELLA_DATES[0]);
+		return dateFormat.format(calendar.getTime());
+	}
+
+	private String calculateBcg(String dateTemp) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(dateTemp)));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, BCG_DATES[0]);
+		return dateFormat.format(calendar.getTime());
 	}
 }
