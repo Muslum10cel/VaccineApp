@@ -85,4 +85,9 @@ public class VaccineApp {
 	public int addComment(@WebParam(name = "username") String username, @WebParam(name = "vaccine_name") String vaccine_name, @WebParam(name = "comment") String comment) {
 		return dBOperations.addComment(username, vaccine_name, comment);
 	}
+
+	@WebMethod(operationName = "forgottenPassword")
+	public int forgottenPassword(String username, String newPassword) {
+		return dBOperations.forgottenPassword(username, newPassword);
+	}
 }
