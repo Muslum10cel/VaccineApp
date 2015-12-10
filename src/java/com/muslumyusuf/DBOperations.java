@@ -175,7 +175,6 @@ public class DBOperations {
 			callableStatement.executeQuery();
 
 			callableStatement = connection.prepareCall(DbStoredProcedures.SET_FALSE_ALL_VACCINES_STATUS);
-			callableStatement.setString(1, baby_name);
 			callableStatement.executeQuery();
 
 			return 1;
@@ -488,7 +487,9 @@ public class DBOperations {
 
 	private void closeEverything() {
 		try {
-			connection.close();
+			if (connection != null) {
+				connection.close();
+			}
 			if (resultSet != null) {
 				resultSet.close();
 			}
@@ -544,6 +545,7 @@ public class DBOperations {
 			for (int i = 0; i < DaBT_IPA_HIB_DATES.length; i++) {
 				calendar.add(Calendar.DATE, DaBT_IPA_HIB_DATES[i]);
 				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
+				calendar.setTime(date);
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -562,6 +564,7 @@ public class DBOperations {
 			for (int i = 0; i < HEPATIT_A_DATES.length; i++) {
 				calendar.add(Calendar.DATE, HEPATIT_A_DATES[i]);
 				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
+				calendar.setTime(date);
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -570,16 +573,17 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateHepatit_B(Connection connection,  String date_of_birth) {
+	private CallableStatement calculateHepatit_B(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_HEPATIT_B_VACCINES);
 			for (int i = 0; i < HEPATIT_B_DATES.length; i++) {
 				calendar.add(Calendar.DATE, HEPATIT_B_DATES[i]);
 				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
+				calendar.setTime(date);
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -598,6 +602,7 @@ public class DBOperations {
 			for (int i = 0; i < KKK_DATES.length; i++) {
 				calendar.add(Calendar.DATE, KKK_DATES[i]);
 				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
+				calendar.setTime(date);
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -616,6 +621,7 @@ public class DBOperations {
 			for (int i = 0; i < KPA_DATES.length; i++) {
 				calendar.add(Calendar.DATE, KPA_DATES[i]);
 				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
+				calendar.setTime(date);
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -632,8 +638,9 @@ public class DBOperations {
 			calendar.setTime(date);
 			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_OPA_VACCINES);
 			for (int i = 0; i < OPA_DATES.length; i++) {
-				calendar.add(Calendar.DATE, KKK_DATES[i]);
+				calendar.add(Calendar.DATE, OPA_DATES[i]);
 				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
+				calendar.setTime(date);
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -652,6 +659,7 @@ public class DBOperations {
 			for (int i = 0; i < RVA_DATES.length; i++) {
 				calendar.add(Calendar.DATE, RVA_DATES[i]);
 				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
+				calendar.setTime(date);
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
