@@ -149,30 +149,29 @@ public class DBOperations {
 			callableStatement.executeQuery();
 
 			callableStatement = connection.prepareCall(DbStoredProcedures.ADD_VACCINES);
-			callableStatement.setString(1, baby_name);
-			callableStatement.setString(2, calculateBcg(date_of_birth));
-			callableStatement.setString(3, calculateVaricella(date_of_birth));
+			callableStatement.setString(1, calculateBcg(date_of_birth));
+			callableStatement.setString(2, calculateVaricella(date_of_birth));
 			callableStatement.executeQuery();
 
-			callableStatement = calculateDaBT_IPA_HIB(connection, baby_name, date_of_birth);
+			callableStatement = calculateDaBT_IPA_HIB(connection, date_of_birth);
 			callableStatement.executeQuery();
 
-			callableStatement = calculateHepatit_A(connection, baby_name, date_of_birth);
+			callableStatement = calculateHepatit_A(connection, date_of_birth);
 			callableStatement.executeQuery();
 
-			callableStatement = calculateHepatit_B(connection, baby_name, date_of_birth);
+			callableStatement = calculateHepatit_B(connection, date_of_birth);
 			callableStatement.executeQuery();
 
-			callableStatement = calculateKKK(connection, baby_name, date_of_birth);
+			callableStatement = calculateKKK(connection, date_of_birth);
 			callableStatement.executeQuery();
 
-			callableStatement = calculateKPA(connection, baby_name, date_of_birth);
+			callableStatement = calculateKPA(connection, date_of_birth);
 			callableStatement.executeQuery();
 
-			callableStatement = calculateOPA(connection, baby_name, date_of_birth);
+			callableStatement = calculateOPA(connection, date_of_birth);
 			callableStatement.executeQuery();
 
-			callableStatement = calculateRVA(connection, baby_name, date_of_birth);
+			callableStatement = calculateRVA(connection, date_of_birth);
 			callableStatement.executeQuery();
 
 			callableStatement = connection.prepareCall(DbStoredProcedures.SET_FALSE_ALL_VACCINES_STATUS);
@@ -535,17 +534,16 @@ public class DBOperations {
 		return dateFormat.format(calendar.getTime());
 	}
 
-	private CallableStatement calculateDaBT_IPA_HIB(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateDaBT_IPA_HIB(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
 			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
-			tempCall.setString(1, baby_name);
 			for (int i = 0; i < DaBT_IPA_HIB_DATES.length; i++) {
 				calendar.add(Calendar.DATE, DaBT_IPA_HIB_DATES[i]);
-				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -554,17 +552,16 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateHepatit_A(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateHepatit_A(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
-			tempCall.setString(1, baby_name);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_HEPATIT_A_VACCINES);
 			for (int i = 0; i < HEPATIT_A_DATES.length; i++) {
 				calendar.add(Calendar.DATE, HEPATIT_A_DATES[i]);
-				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -573,17 +570,16 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateHepatit_B(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateHepatit_B(Connection connection,  String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
 			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
-			tempCall.setString(1, baby_name);
 			for (int i = 0; i < HEPATIT_B_DATES.length; i++) {
 				calendar.add(Calendar.DATE, HEPATIT_B_DATES[i]);
-				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -592,17 +588,16 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateKKK(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateKKK(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
-			tempCall.setString(1, baby_name);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_KKK_VACCINES);
 			for (int i = 0; i < KKK_DATES.length; i++) {
 				calendar.add(Calendar.DATE, KKK_DATES[i]);
-				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -611,17 +606,16 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateKPA(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateKPA(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
-			tempCall.setString(1, baby_name);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_KPA_VACCINES);
 			for (int i = 0; i < KPA_DATES.length; i++) {
 				calendar.add(Calendar.DATE, KPA_DATES[i]);
-				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -630,17 +624,16 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateOPA(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateOPA(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
-			tempCall.setString(1, baby_name);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_OPA_VACCINES);
 			for (int i = 0; i < OPA_DATES.length; i++) {
 				calendar.add(Calendar.DATE, KKK_DATES[i]);
-				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
@@ -649,17 +642,16 @@ public class DBOperations {
 		return null;
 	}
 
-	private CallableStatement calculateRVA(Connection connection, String baby_name, String date_of_birth) {
+	private CallableStatement calculateRVA(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(date_of_birth)));
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_DaBT_IPA_HIB);
-			tempCall.setString(1, baby_name);
+			CallableStatement tempCall = connection.prepareCall(DbStoredProcedures.ADD_RVA_VACCINES);
 			for (int i = 0; i < RVA_DATES.length; i++) {
 				calendar.add(Calendar.DATE, RVA_DATES[i]);
-				tempCall.setString(i + 2, dateFormat.format(calendar.getTime()));
+				tempCall.setString(i + 1, dateFormat.format(calendar.getTime()));
 			}
 			return tempCall;
 		} catch (SQLException | ParseException ex) {
