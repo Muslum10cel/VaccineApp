@@ -140,6 +140,15 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 *
+	 *
+	 * @param username username of current user
+	 * @param baby_name baby name
+	 * @param date_of_birth birth date of baby
+	 * @return 1 for successfully
+	 *
+	 */
 	public synchronized int addBaby(String username, String baby_name, String date_of_birth) {
 		try {
 			openConnection();
@@ -187,6 +196,11 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 * @param flag
+	 * @return *
+	 */
 	public synchronized int update_DaBT_IPA_HIB(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -218,6 +232,11 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 * @param flag
+	 * @return
+	 */
 	public synchronized int update_Hepatit_A(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -241,6 +260,11 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 * @param flag
+	 * @return
+	 */
 	public synchronized int update_Hepatit_B(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -266,6 +290,11 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 * @param flag
+	 * @return
+	 */
 	public synchronized int update_KKK(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -289,6 +318,12 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 *
+	 * @param flag
+	 * @return
+	 */
 	public synchronized int update_KPA(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -316,6 +351,12 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 *
+	 * @param flag
+	 * @return
+	 */
 	public synchronized int update_OPA(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -339,6 +380,12 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 *
+	 * @param flag
+	 * @return
+	 */
 	public synchronized int update_RVA(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -364,6 +411,12 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 *
+	 * @param flag
+	 * @return
+	 */
 	public synchronized int update_Vaccines(int baby_id, int flag) {
 		try {
 			openConnection();
@@ -395,6 +448,13 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param username
+	 *
+	 * @param vaccine_name
+	 * @param comment
+	 * @return
+	 */
 	public synchronized int addComment(String username, String vaccine_name, String comment) {
 		try {
 			openConnection();
@@ -412,6 +472,11 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param baby_id
+	 *
+	 * @return
+	 */
 	public synchronized JSONObject completedAndIncompletedVaccines(int baby_id) {
 		JSONObject jSONObject = new JSONObject();
 		try {
@@ -458,6 +523,12 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 * @param username
+	 *
+	 * @param newPassword
+	 * @return
+	 */
 	public synchronized int forgottenPassword(String username, String newPassword) {
 		try {
 			int userAvailable = 0;
@@ -486,6 +557,14 @@ public class DBOperations {
 		return -1;
 	}
 
+	/**
+	 * @param username
+	 *
+	 * @param vaccine_name
+	 * @param beginning
+	 * @param end
+	 * @return
+	 */
 	public synchronized JSONArray getComments(String username, String vaccine_name, int beginning, int end) {
 		JSONArray jSONArray = new JSONArray();
 		jSONArray.put("COMMENTS");
@@ -516,6 +595,9 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 * *
+	 */
 	private void closeEverything() {
 		try {
 			if (connection != null) {
@@ -535,6 +617,9 @@ public class DBOperations {
 		}
 	}
 
+	/**
+	 *
+	 */
 	private String passToHash(String password) {
 		String hashedPassword = "";
 		try {
@@ -548,6 +633,9 @@ public class DBOperations {
 		return hashedPassword;
 	}
 
+	/**
+	 *
+	 */
 	private String calculateVaricella(String dateTemp) throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(dateTemp)));
@@ -557,6 +645,9 @@ public class DBOperations {
 		return dateFormat.format(calendar.getTime());
 	}
 
+	/**
+	 *
+	 */
 	private String calculateBcg(String dateTemp) throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = dateFormat.parse(dateFormat.format(dateFormat.parse(dateTemp)));
@@ -566,6 +657,9 @@ public class DBOperations {
 		return dateFormat.format(calendar.getTime());
 	}
 
+	/**
+	 *
+	 */
 	private CallableStatement calculateDaBT_IPA_HIB(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -585,6 +679,9 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	private CallableStatement calculateHepatit_A(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -604,6 +701,9 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	private CallableStatement calculateHepatit_B(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -623,6 +723,9 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	private CallableStatement calculateKKK(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -642,6 +745,9 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	private CallableStatement calculateKPA(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -661,6 +767,9 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	private CallableStatement calculateOPA(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -680,6 +789,9 @@ public class DBOperations {
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	private CallableStatement calculateRVA(Connection connection, String date_of_birth) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
