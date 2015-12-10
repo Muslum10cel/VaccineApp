@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -483,6 +484,34 @@ public class DBOperations {
 			closeEverything();
 		}
 		return -1;
+	}
+
+	public synchronized JSONArray getComments(String username, String vaccine_name, int beginning, int end) {
+		JSONArray jSONArray = new JSONArray();
+		jSONArray.put("COMMENTS");
+		try {
+			openConnection();
+			callableStatement = connection.prepareCall(DbStoredProcedures.GET_COMMENTS);
+			callableStatement.setString(1, username);
+			callableStatement.setString(2, vaccine_name);
+			callableStatement.setInt(3, beginning);
+			callableStatement.setInt(4, end);
+			resultSet = callableStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					JSONObject jSONObject = new JSONObject();
+					jSONObject.put(Tags.USERNAME, resultSet.getString(1));
+					jSONObject.put(Tags.VACCINE_NAME, resultSet.getString(2));
+					jSONObject.put(Tags.COMMENT, resultSet.getString(3));
+					jSONObject.put(Tags.COMMENT_DATE, resultSet.getDate(4));
+					jSONArray.put(jSONObject);
+				}
+			}
+			return jSONArray;
+		} catch (SQLException | JSONException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
 	}
 
 	private void closeEverything() {

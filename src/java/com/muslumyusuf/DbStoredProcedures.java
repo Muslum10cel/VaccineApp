@@ -24,7 +24,6 @@ public class DbStoredProcedures {
 	public static final String DELETE_COMMENT = "{call db_9c4db8_dprtmnt.deleteComment(?)}";
 	public static final String FORGOTTEN_PASSWORD = "{call db_9c4db8_dprtmnt.forgottenPassword(?,?)}";
 	public static final String GET_BABY_VACCINES = "{call db_9c4db8_dprtmnt.getBabyVaccines(?)}";
-	public static final String GET_COMMENT = "{call db_9c4db8_dprtmnt.getComment(?)}";
 	public static final String GET_COMPLETED_VACCINES = "{call db_9c4db8_dprtmnt.getCompletedVaccines(?)}";
 	public static final String SET_FALSE_ALL_VACCINES_STATUS = "{call db_9c4db8_dprtmnt.setFalseAllVaccinesStatus()}";
 	public static final String UPDATE_DaBT_IPA_HIB = "{call db_9c4db8_dprtmnt.update_DaBT_IPA_HIB(?,?)}";
@@ -35,5 +34,6 @@ public class DbStoredProcedures {
 	public static final String UPDATE_OPA = "{call db_9c4db8_dprtmnt.update_OPA(?,?)}";
 	public static final String UPDATE_RVA = "{call db_9c4db8_dprtmnt.update_RVA(?,?)}";
 	public static final String UPDATE_VACCINES = "{call db_9c4db8_dprtmnt.update_Vaccines(?,?)}";
+	public static final String GET_COMMENTS = "{call db_9c4db8_dprtmnt.getComment(?,?,?,?)}";
 
 }

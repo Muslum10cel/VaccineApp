@@ -89,4 +89,9 @@ public class VaccineApp {
 	public int forgottenPassword(String username, String newPassword) {
 		return dBOperations.forgottenPassword(username, newPassword);
 	}
+
+	@WebMethod(operationName = "getComment")
+	public String comments(String username, String vaccine_name, int beginning, int end) {
+		return dBOperations.getComments(username, vaccine_name, beginning, end).toString();
+	}
 }

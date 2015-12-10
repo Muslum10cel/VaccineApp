@@ -47,4 +47,9 @@ public class Tags {
 	public static final String FIFTH_DaBT_IPA_HIB = "FIFTH_DaBT_IPA_HIB_STATUS";
 	public static final String SIXTH_DaBT_IPA_HIB = "SIXTH_DaBT_IPA_HIB_STATUS";
 
+	public static final String USERNAME = "USERNAME";
+	public static final String VACCINE_NAME = "VACCINE_NAME";
+	public static final String COMMENT = "COMMENT";
+	public static final String COMMENT_DATE = "COMMENT_DATE";
+
 }
