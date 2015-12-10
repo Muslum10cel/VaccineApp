@@ -29,11 +29,11 @@ public class DbStoredProcedures {
 	public static final String SET_FALSE_ALL_VACCINES_STATUS = "{call db_9c4db8_dprtmnt.setFalseAllVaccinesStatus()}";
 	public static final String UPDATE_DaBT_IPA_HIB = "{call db_9c4db8_dprtmnt.update_DaBT_IPA_HIB(?,?)}";
 	public static final String UPDATE_HEPATIT_A = "{call db_9c4db8_dprtmnt.update_Hepatit_A(?,?)}";
-	public static final String UPDATE_HEPATIT_B="{call db_9c4db8_dprtmnt.update_Hepatit_B(?,?)}";
-	public static final String UPDATE_KKK="{call db_9c4db8_dprtmnt.update_KKK(?,?)}";
-	public static final String UPDATE_KPA="{call db_9c4db8_dprtmnt.update_KPA(?,?)}";
-	public static final String UPDATE_OPA="{call db_9c4db8_dprtmnt.update_OPA(?,?)}";
-	public static final String UPDATE_RVA="{call db_9c4db8_dprtmnt.update_RVA(?,?)}";
-	public static final String UPDATE_VACCINES="{call db_9c4db8_dprtmnt.update_Vaccines(?,?)}";
-	
+	public static final String UPDATE_HEPATIT_B = "{call db_9c4db8_dprtmnt.update_Hepatit_B(?,?)}";
+	public static final String UPDATE_KKK = "{call db_9c4db8_dprtmnt.update_KKK(?,?)}";
+	public static final String UPDATE_KPA = "{call db_9c4db8_dprtmnt.update_KPA(?,?)}";
+	public static final String UPDATE_OPA = "{call db_9c4db8_dprtmnt.update_OPA(?,?)}";
+	public static final String UPDATE_RVA = "{call db_9c4db8_dprtmnt.update_RVA(?,?)}";
+	public static final String UPDATE_VACCINES = "{call db_9c4db8_dprtmnt.update_Vaccines(?,?)}";
+
 }
