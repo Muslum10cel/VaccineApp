@@ -510,6 +510,8 @@ public class DBOperations {
 			return jSONArray;
 		} catch (SQLException | JSONException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
 		}
 		return null;
 	}
