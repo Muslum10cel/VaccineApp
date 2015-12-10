@@ -99,14 +99,8 @@ public class DBOperations {
 	}
 
 	/**
-	 * In logIn method we take username and password of user as parameter.
-	 * First of all, We consume check user function to check user is
-	 * available in database or not. If user is already in database, method
-	 * will return 1. If not, we invoke log in function with username and
-	 * password and if password is ok will return 0. If there is an
-	 * exception it will return -1.
-	 *
-	 * @param username
+	 * 
+	 * @param username 
 	 * @param password
 	 * @return
 	 *
@@ -127,10 +121,14 @@ public class DBOperations {
 				preparedStatement = connection.prepareStatement(DbFunctions.LOG_IN);
 				preparedStatement.setString(1, username);
 				preparedStatement.setString(2, passToHash(password));
-				preparedStatement.executeQuery();
-				return 0;
+				resultSet = preparedStatement.executeQuery();
+				if (resultSet != null) {
+					while (resultSet.next()) {
+						return resultSet.getInt(1);
+					}
+				}
 			} else {
-				return userAvailable;
+				return -2;
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
