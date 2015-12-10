@@ -186,14 +186,12 @@ public class DBOperations {
 		return -1;
 	}
 
-	public synchronized int update_DaBT_IPA_HIB(String baby_name, int flag) {
+	public synchronized int update_DaBT_IPA_HIB(int baby_id, int flag) {
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_DaBT_IPA_HIB);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
 				callableStatement.setInt(2, Flags.ONE_FLAG);
 			} else if (flag == 2) {
 				callableStatement.setInt(2, Flags.TWO_FLAG);
@@ -203,6 +201,8 @@ public class DBOperations {
 				callableStatement.setInt(2, Flags.FOUR_FLAG);
 			} else if (flag == 5) {
 				callableStatement.setInt(2, Flags.FIVE_FLAG);
+			} else if (flag == 6) {
+				callableStatement.setInt(2, Flags.SIX_FLAG);
 			} else {
 				return 0;
 			}
@@ -217,37 +217,12 @@ public class DBOperations {
 		return -1;
 	}
 
-	public synchronized int update_Hepatit_A(String baby_name, int flag) {
+	public synchronized int update_Hepatit_A(int baby_id, int flag) {
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_HEPATIT_A);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
-				callableStatement.setInt(2, Flags.ONE_FLAG);
-			} else {
-				return 0;
-			}
-			callableStatement.executeQuery();
-			return 1;
-		} catch (SQLException ex) {
-			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
-		} finally {
-			closeEverything();
-		}
-
-		return -1;
-	}
-
-	public synchronized int update_Hepatit_B(String baby_name, int flag) {
-		try {
-			openConnection();
-			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_HEPATIT_B);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
 				callableStatement.setInt(2, Flags.ONE_FLAG);
 			} else if (flag == 2) {
 				callableStatement.setInt(2, Flags.TWO_FLAG);
@@ -265,37 +240,12 @@ public class DBOperations {
 		return -1;
 	}
 
-	public synchronized int update_KKK(String baby_name, int flag) {
+	public synchronized int update_Hepatit_B(int baby_id, int flag) {
 		try {
 			openConnection();
-			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KKK);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
-				callableStatement.setInt(2, Flags.ONE_FLAG);
-			} else {
-				return 0;
-			}
-			callableStatement.executeQuery();
-			return 1;
-		} catch (SQLException ex) {
-			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
-		} finally {
-			closeEverything();
-		}
-
-		return -1;
-	}
-
-	public synchronized int update_KPA(String baby_name, int flag) {
-		try {
-			openConnection();
-			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KPA);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
+			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_HEPATIT_B);
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
 				callableStatement.setInt(2, Flags.ONE_FLAG);
 			} else if (flag == 2) {
 				callableStatement.setInt(2, Flags.TWO_FLAG);
@@ -315,37 +265,12 @@ public class DBOperations {
 		return -1;
 	}
 
-	public synchronized int update_OPA(String baby_name, int flag) {
+	public synchronized int update_KKK(int baby_id, int flag) {
 		try {
 			openConnection();
-			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_OPA);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
-				callableStatement.setInt(2, Flags.ONE_FLAG);
-			} else {
-				return 0;
-			}
-			callableStatement.executeQuery();
-			return 1;
-		} catch (SQLException ex) {
-			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
-		} finally {
-			closeEverything();
-		}
-
-		return -1;
-	}
-
-	public synchronized int update_RVA(String baby_name, int flag) {
-		try {
-			openConnection();
-			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_RVA);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
+			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KKK);
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
 				callableStatement.setInt(2, Flags.ONE_FLAG);
 			} else if (flag == 2) {
 				callableStatement.setInt(2, Flags.TWO_FLAG);
@@ -363,14 +288,87 @@ public class DBOperations {
 		return -1;
 	}
 
-	public synchronized int update_Vaccines(String baby_name, int flag) {
+	public synchronized int update_KPA(int baby_id, int flag) {
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KPA);
-			callableStatement.setString(1, baby_name);
-			if (flag == 0) {
-				callableStatement.setInt(2, Flags.ZERO_FLAG);
-			} else if (flag == 1) {
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
+				callableStatement.setInt(2, Flags.ONE_FLAG);
+			} else if (flag == 2) {
+				callableStatement.setInt(2, Flags.TWO_FLAG);
+			} else if (flag == 3) {
+				callableStatement.setInt(2, Flags.THREE_FLAG);
+			} else if (flag == 4) {
+				callableStatement.setInt(2, Flags.FOUR_FLAG);
+			} else {
+				return 0;
+			}
+			callableStatement.executeQuery();
+			return 1;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
+		}
+
+		return -1;
+	}
+
+	public synchronized int update_OPA(int baby_id, int flag) {
+		try {
+			openConnection();
+			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_OPA);
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
+				callableStatement.setInt(2, Flags.ONE_FLAG);
+			} else if (flag == 2) {
+				callableStatement.setInt(2, Flags.TWO_FLAG);
+			} else {
+				return 0;
+			}
+			callableStatement.executeQuery();
+			return 1;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
+		}
+
+		return -1;
+	}
+
+	public synchronized int update_RVA(int baby_id, int flag) {
+		try {
+			openConnection();
+			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_RVA);
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
+				callableStatement.setInt(2, Flags.ONE_FLAG);
+			} else if (flag == 2) {
+				callableStatement.setInt(2, Flags.TWO_FLAG);
+			} else if (flag == 3) {
+				callableStatement.setInt(2, Flags.THREE_FLAG);
+			} else {
+				return 0;
+			}
+			callableStatement.executeQuery();
+			return 1;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
+		}
+
+		return -1;
+	}
+
+	public synchronized int update_Vaccines(int baby_id, int flag) {
+		try {
+			openConnection();
+			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KPA);
+			callableStatement.setInt(1, baby_id);
+			if (flag == 1) {
 				callableStatement.setInt(2, Flags.ONE_FLAG);
 			} else if (flag == 2) {
 				callableStatement.setInt(2, Flags.TWO_FLAG);
@@ -380,6 +378,8 @@ public class DBOperations {
 				callableStatement.setInt(2, Flags.FOUR_FLAG);
 			} else if (flag == 5) {
 				callableStatement.setInt(2, Flags.FIVE_FLAG);
+			} else if (flag == 6) {
+				callableStatement.setInt(2, Flags.SIX_FLAG);
 			} else {
 				return 0;
 			}
@@ -411,12 +411,12 @@ public class DBOperations {
 		return -1;
 	}
 
-	public synchronized JSONObject completedAndIncompletedVaccines(String baby_name) {
+	public synchronized JSONObject completedAndIncompletedVaccines(int baby_id) {
 		JSONObject jSONObject = new JSONObject();
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.GET_COMPLETED_VACCINES);
-			callableStatement.setString(1, baby_name);
+			callableStatement.setInt(1, baby_id);
 			resultSet = callableStatement.executeQuery();
 			if (resultSet != null) {
 				while (resultSet.next()) {
