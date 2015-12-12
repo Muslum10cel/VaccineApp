@@ -515,6 +515,8 @@ public class DBOperations {
 			}
 		} catch (SQLException | JSONException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
 		}
 		return null;
 	}
@@ -610,6 +612,8 @@ public class DBOperations {
 			return jSONArray;
 		} catch (SQLException | JSONException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			closeEverything();
 		}
 		return null;
 	}
@@ -638,7 +642,7 @@ public class DBOperations {
 
 	/**
 	 * Returns hashed string
-	 * 
+	 *
 	 * @return SHA-512 encrypted password
 	 */
 	private String passToHash(String password) {
