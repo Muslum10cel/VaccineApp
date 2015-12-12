@@ -5,6 +5,7 @@
  */
 package com.muslumyusuf;
 
+import initialize.Initialize;
 import com.mysql.jdbc.Connection;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
