@@ -52,4 +52,10 @@ public class Tags {
 	public static final String COMMENT = "COMMENT";
 	public static final String COMMENT_DATE = "COMMENT_DATE";
 
+	public static final String COMMENTS = "COMMENTS";
+
+	public static final String BABIES = "BABIES";
+	public static final String BABY_ID = "BABY_ID";
+	public static final String BABY_NAME = "BABY_NAME";
+
 }
