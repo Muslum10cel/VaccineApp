@@ -57,8 +57,8 @@ public class DBOperations {
 	}
 
 	/**
-	 * Returns an integer value. This method returns when user wants to register.
-	 * Username, full name and password must be specified.
+	 * Returns an integer value. This method returns when user wants to
+	 * register. Username, full name and password must be specified.
 	 *
 	 * @param username Username for registration
 	 * @param fullname Name and surname of user
@@ -96,9 +96,9 @@ public class DBOperations {
 	}
 
 	/**
-	 * Returns an integer value. This method returns when user log-in to system.
-	 * Username and password must be specified.
-	 * 
+	 * Returns an integer value. This method returns when user log-in to
+	 * system. Username and password must be specified.
+	 *
 	 * @param username Username of user
 	 * @param password Password of user
 	 * @return Log-in successful or failed
@@ -563,7 +563,7 @@ public class DBOperations {
 	 */
 	public synchronized JSONArray getComments(String username, String vaccine_name, int beginning, int end) {
 		JSONArray jSONArray = new JSONArray();
-		jSONArray.put("COMMENTS");
+		jSONArray.put(Tags.COMMENTS);
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.GET_COMMENTS);
@@ -593,7 +593,7 @@ public class DBOperations {
 
 	public synchronized JSONArray getBabies(String username) {
 		JSONArray jSONArray = new JSONArray();
-		jSONArray.put("BABIES");
+		jSONArray.put(Tags.BABIES);
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.GET_BABIES);
@@ -602,8 +602,8 @@ public class DBOperations {
 			if (resultSet != null) {
 				while (resultSet.next()) {
 					JSONObject jSONObject = new JSONObject();
-					jSONObject.put("BABY_ID", resultSet.getInt(1));
-					jSONObject.put("BABY_NAME", resultSet.getString(2));
+					jSONObject.put(Tags.BABY_ID, resultSet.getInt(1));
+					jSONObject.put(Tags.BABY_NAME, resultSet.getString(2));
 					jSONArray.put(jSONObject);
 				}
 			}
