@@ -57,18 +57,10 @@ public class DBOperations {
 	}
 
 	/**
-	 * In register method we register user and check registration successful
-	 * or not. First of all, we have encrypt password to SHA-256.Callable
-	 * statement is used for consuming stored procedures. For registration,
-	 * we use a stored procedure called "Register" with callableStatement.
-	 * Then we set our data to callableStatement. To check registration, we
-	 * use 0,-1 and 1. If system fails, return -1, if username is available
-	 * return 1, if registration is successfull return 0.
-	 *
 	 * @param username
 	 * @param fullname
 	 * @param password
-	 * @return Registration is successfull or not
+	 * @return Registration is successful or not
 	 */
 	public synchronized int register(String username, String fullname, String password) {
 		int userAvailable = 0, registered = -1;
