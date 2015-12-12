@@ -637,7 +637,9 @@ public class DBOperations {
 	}
 
 	/**
-	 *
+	 * Returns hashed string
+	 * 
+	 * @return SHA-512 encrypted password
 	 */
 	private String passToHash(String password) {
 		String hashedPassword = "";
