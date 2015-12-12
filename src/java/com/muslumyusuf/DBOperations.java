@@ -57,10 +57,13 @@ public class DBOperations {
 	}
 
 	/**
-	 * @param username
-	 * @param fullname
-	 * @param password
-	 * @return Registration is successful or not
+	 * Returns an integer value. This method returns when user wants to register.
+	 * Username, full name and password must be specified.
+	 *
+	 * @param username Username for registration
+	 * @param fullname Name and surname of user
+	 * @param password Password of user
+	 * @return Registration is successful or failed
 	 */
 	public synchronized int register(String username, String fullname, String password) {
 		int userAvailable = 0, registered = -1;
@@ -80,7 +83,7 @@ public class DBOperations {
 				preparedStatement.setString(2, passToHash(password));
 				preparedStatement.setInt(3, Flags.USER_FLAG);
 				preparedStatement.executeQuery();
-				registered = 0;
+				registered = 1;
 			} else {
 				return userAvailable;
 			}
@@ -93,11 +96,12 @@ public class DBOperations {
 	}
 
 	/**
-	 *
-	 * @param username
-	 * @param password
-	 * @return
-	 *
+	 * Returns an integer value. This method returns when user log-in to system.
+	 * Username and password must be specified.
+	 * 
+	 * @param username Username of user
+	 * @param password Password of user
+	 * @return Log-in successful or failed
 	 */
 	public synchronized int logIn(String username, String password) {
 		int userAvailable = 0;
@@ -133,7 +137,7 @@ public class DBOperations {
 	}
 
 	/**
-	 *
+	 * Returns an integer value.
 	 *
 	 * @param username username of current user
 	 * @param baby_name baby name
