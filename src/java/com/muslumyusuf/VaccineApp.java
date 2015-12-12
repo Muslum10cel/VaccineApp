@@ -96,7 +96,7 @@ public class VaccineApp {
 		return dBOperations.getComments(username, vaccine_name, beginning, end).toString();
 	}
 	
-	@Produces("paplication/json")
+	@Produces("application/json")
 	@WebMethod(operationName = "getBabies")
 	public String getBabies(String username){
 		return dBOperations.getBabies(username).toString();
