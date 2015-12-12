@@ -563,9 +563,9 @@ public class DBOperations {
 	 * @param end
 	 * @return
 	 */
-	public synchronized JSONArray getComments(String username, String vaccine_name, int beginning, int end) {
+	public synchronized JSONObject getComments(String username, String vaccine_name, int beginning, int end) {
+		JSONObject object=new JSONObject();
 		JSONArray jSONArray = new JSONArray();
-		jSONArray.put(Tags.COMMENTS);
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.GET_COMMENTS);
@@ -584,7 +584,7 @@ public class DBOperations {
 					jSONArray.put(jSONObject);
 				}
 			}
-			return jSONArray;
+			return object.put(Tags.COMMENTS, jSONArray);
 		} catch (SQLException | JSONException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
@@ -593,9 +593,9 @@ public class DBOperations {
 		return null;
 	}
 
-	public synchronized JSONArray getBabies(String username) {
+	public synchronized JSONObject getBabies(String username) {
+		JSONObject jsonObject = new JSONObject();
 		JSONArray jSONArray = new JSONArray();
-		jSONArray.put(Tags.BABIES);
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.GET_BABIES);
@@ -609,7 +609,7 @@ public class DBOperations {
 					jSONArray.put(jSONObject);
 				}
 			}
-			return jSONArray;
+			return jsonObject.put(Tags.BABIES, jSONArray);
 		} catch (SQLException | JSONException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
