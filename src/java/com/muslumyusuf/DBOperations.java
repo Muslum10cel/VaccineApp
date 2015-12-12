@@ -65,10 +65,11 @@ public class DBOperations {
 	 * return 1, if registration is successfull return 0.
 	 *
 	 * @param username
+	 * @param fullname
 	 * @param password
 	 * @return Registration is successfull or not
 	 */
-	public synchronized int register(String username, String password) {
+	public synchronized int register(String username, String fullname, String password) {
 		int userAvailable = 0, registered = -1;
 		try {
 			openConnection();
@@ -99,8 +100,8 @@ public class DBOperations {
 	}
 
 	/**
-	 * 
-	 * @param username 
+	 *
+	 * @param username
 	 * @param password
 	 * @return
 	 *
@@ -457,8 +458,8 @@ public class DBOperations {
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.ADD_COMMENT);
-			callableStatement.setString(1, username);
-			callableStatement.setString(1, vaccine_name);
+			callableStatement.setString(1, username.trim());
+			callableStatement.setString(2, vaccine_name.trim());
 			callableStatement.setString(3, comment);
 			callableStatement.executeQuery();
 			return 1;
@@ -589,6 +590,29 @@ public class DBOperations {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			closeEverything();
+		}
+		return null;
+	}
+
+	public synchronized JSONArray getBabies(String username) {
+		JSONArray jSONArray = new JSONArray();
+		jSONArray.put("BABIES");
+		try {
+			openConnection();
+			callableStatement = connection.prepareCall(DbStoredProcedures.GET_BABIES);
+			callableStatement.setString(1, username);
+			resultSet = callableStatement.executeQuery();
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					JSONObject jSONObject = new JSONObject();
+					jSONObject.put("BABY_ID", resultSet.getInt(1));
+					jSONObject.put("BABY_NAME", resultSet.getString(2));
+					jSONArray.put(jSONObject);
+				}
+			}
+			return jSONArray;
+		} catch (SQLException | JSONException ex) {
+			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return null;
 	}

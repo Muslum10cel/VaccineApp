@@ -20,8 +20,8 @@ public class VaccineApp {
 	private final static DBOperations dBOperations = new DBOperations();
 
 	@WebMethod(operationName = "register")
-	public int register(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
-		return dBOperations.register(username, password);
+	public int register(@WebParam(name = "username") String username, @WebParam(name = "fullname") String fullname, @WebParam(name = "password") String password) {
+		return dBOperations.register(username, fullname, password);
 	}
 
 	@WebMethod(operationName = "log_in")
@@ -94,5 +94,11 @@ public class VaccineApp {
 	@WebMethod(operationName = "getComment")
 	public String comments(String username, String vaccine_name, int beginning, int end) {
 		return dBOperations.getComments(username, vaccine_name, beginning, end).toString();
+	}
+	
+	@Produces("paplication/json")
+	@WebMethod(operationName = "getBabies")
+	public String getBabies(String username){
+		return dBOperations.getBabies(username).toString();
 	}
 }
