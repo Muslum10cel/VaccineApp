@@ -35,48 +35,48 @@ public class VaccineApp {
 	}
 
 	@WebMethod(operationName = "update_DaBT_IPA_HIB")
-	public int update_DaBT_IPA_HIB(@WebParam(name = "baby_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_DaBT_IPA_HIB(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_DaBT_IPA_HIB(baby_id, flag);
 	}
 
 	@WebMethod(operationName = "update_Hepatit_A")
-	public int update_Hepatit_A(@WebParam(name = "baby_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_Hepatit_A(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_Hepatit_A(baby_id, flag);
 	}
 
 	@WebMethod(operationName = "update_Hepatit_B")
-	public int update_Hepatit_B(@WebParam(name = "baby_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_Hepatit_B(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_Hepatit_B(baby_id, flag);
 	}
 
 	@WebMethod(operationName = "update_KKK")
-	public int update_KKK(@WebParam(name = "baby_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_KKK(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_KKK(baby_id, flag);
 	}
 
 	@WebMethod(operationName = "update_KPA")
-	public int update_KPA(@WebParam(name = "baby_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_KPA(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_KPA(baby_id, flag);
 	}
 
 	@WebMethod(operationName = "update_OPA")
-	public int update_OPA(@WebParam(name = "baby_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_OPA(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_OPA(baby_id, flag);
 	}
 
 	@WebMethod(operationName = "update_RVA")
-	public int update_RVA(@WebParam(name = "baby_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_RVA(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_RVA(baby_id, flag);
 	}
 
 	@WebMethod(operationName = "update_Vaccines")
-	public int update_Vaccines(@WebParam(name = "babay_name") int baby_id, @WebParam(name = "flag") int flag) {
+	public int update_Vaccines(@WebParam(name = "baby_id") int baby_id, @WebParam(name = "flag") int flag) {
 		return dBOperations.update_Vaccines(baby_id, flag);
 	}
 
 	@Produces("application/json")
 	@WebMethod(operationName = "get_Completed_Vaccines")
-	public String getCompletedVaccines(@WebParam(name = "baby_name") int baby_id) {
+	public String getCompletedVaccines(@WebParam(name = "baby_id") int baby_id) {
 		return dBOperations.completedAndIncompletedVaccines(baby_id).toString();
 	}
 
@@ -86,19 +86,19 @@ public class VaccineApp {
 	}
 
 	@WebMethod(operationName = "forgottenPassword")
-	public int forgottenPassword(String username, String newPassword) {
+	public int forgottenPassword(@WebParam(name = "username")String username,@WebParam(name = "newPassword") String newPassword) {
 		return dBOperations.forgottenPassword(username, newPassword);
 	}
 
 	@Produces("application/json")
 	@WebMethod(operationName = "getComment")
-	public String comments(String username, String vaccine_name, int beginning, int end) {
+	public String comments(@WebParam(name = "username")String username,@WebParam(name = "vaccine_name") String vaccine_name, @WebParam(name = "beginning") int beginning,@WebParam(name = "end") int end) {
 		return dBOperations.getComments(username, vaccine_name, beginning, end).toString();
 	}
-	
+
 	@Produces("application/json")
 	@WebMethod(operationName = "getBabies")
-	public String getBabies(String username){
+	public String getBabies(@WebParam(name = "username") String username) {
 		return dBOperations.getBabies(username).toString();
 	}
 }
