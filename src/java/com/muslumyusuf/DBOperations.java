@@ -608,8 +608,9 @@ public class DBOperations {
 					jSONObject.put(Tags.BABY_NAME, resultSet.getString(2));
 					jSONArray.put(jSONObject);
 				}
+				return jsonObject.put(Tags.BABIES, jSONArray);
 			}
-			return jsonObject.put(Tags.BABIES, jSONArray);
+			return jsonObject.put("fail", "null");
 		} catch (SQLException | JSONException ex) {
 			Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
