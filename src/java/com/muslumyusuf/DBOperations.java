@@ -81,7 +81,8 @@ public class DBOperations {
 				preparedStatement = connection.prepareStatement(DbFunctions.REGISTER);
 				preparedStatement.setString(1, username);
 				preparedStatement.setString(2, passToHash(password));
-				preparedStatement.setInt(3, Flags.USER_FLAG);
+				preparedStatement.setString(3, fullname);
+				preparedStatement.setInt(4, Flags.USER_FLAG);
 				preparedStatement.executeQuery();
 				registered = 1;
 			} else {
@@ -416,7 +417,7 @@ public class DBOperations {
 	public synchronized int update_Vaccines(int baby_id, int flag) {
 		try {
 			openConnection();
-			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KPA);
+			callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_VACCINES);
 			callableStatement.setInt(1, baby_id);
 			if (flag == 1) {
 				callableStatement.setInt(2, Flags.ONE_FLAG);
@@ -564,7 +565,7 @@ public class DBOperations {
 	 * @return
 	 */
 	public synchronized JSONObject getComments(String username, String vaccine_name, int beginning, int end) {
-		JSONObject object=new JSONObject();
+		JSONObject object = new JSONObject();
 		JSONArray jSONArray = new JSONArray();
 		try {
 			openConnection();
