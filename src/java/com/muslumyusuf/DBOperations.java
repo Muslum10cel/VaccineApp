@@ -570,10 +570,9 @@ public class DBOperations {
 		try {
 			openConnection();
 			callableStatement = connection.prepareCall(DbStoredProcedures.GET_COMMENTS);
-			callableStatement.setString(1, username);
-			callableStatement.setString(2, vaccine_name);
-			callableStatement.setInt(3, beginning);
-			callableStatement.setInt(4, end);
+			callableStatement.setString(1, vaccine_name);
+			callableStatement.setInt(2, beginning);
+			callableStatement.setInt(3, end);
 			resultSet = callableStatement.executeQuery();
 			if (resultSet != null) {
 				while (resultSet.next()) {

@@ -34,7 +34,7 @@ public class DbStoredProcedures {
 	public static final String UPDATE_OPA = "{call db_9c4db8_dprtmnt.update_OPA(?,?)}";
 	public static final String UPDATE_RVA = "{call db_9c4db8_dprtmnt.update_RVA(?,?)}";
 	public static final String UPDATE_VACCINES = "{call db_9c4db8_dprtmnt.update_Vaccines(?,?)}";
-	public static final String GET_COMMENTS = "{call db_9c4db8_dprtmnt.getComment(?,?,?,?)}";
+	public static final String GET_COMMENTS = "{call db_9c4db8_dprtmnt.getComment(?,?,?)}";
 	public static final String GET_BABIES = "{call db_9c4db8_dprtmnt.getBabies(?)}";
 
 }
