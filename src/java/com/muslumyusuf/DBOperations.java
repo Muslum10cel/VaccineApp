@@ -564,7 +564,7 @@ public class DBOperations {
 	 * @param end
 	 * @return
 	 */
-	public synchronized JSONObject getComments(String username, String vaccine_name, int beginning, int end) {
+	public synchronized JSONObject getComments(String vaccine_name, int beginning, int end) {
 		JSONObject object = new JSONObject();
 		JSONArray jSONArray = new JSONArray();
 		try {

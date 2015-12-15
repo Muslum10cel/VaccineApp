@@ -92,8 +92,8 @@ public class VaccineApp {
 
 	@Produces("application/json")
 	@WebMethod(operationName = "getComment")
-	public String comments(@WebParam(name = "username")String username,@WebParam(name = "vaccine_name") String vaccine_name, @WebParam(name = "beginning") int beginning,@WebParam(name = "end") int end) {
-		return dBOperations.getComments(username, vaccine_name, beginning, end).toString();
+	public String comments(@WebParam(name = "vaccine_name") String vaccine_name, @WebParam(name = "beginning") int beginning,@WebParam(name = "end") int end) {
+		return dBOperations.getComments(vaccine_name, beginning, end).toString();
 	}
 
 	@Produces("application/json")
