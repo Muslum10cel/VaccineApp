@@ -84,7 +84,7 @@ public class DBOperations {
 				preparedStatement.setString(3, fullname);
 				preparedStatement.setInt(4, Flags.USER_FLAG);
 				preparedStatement.executeQuery();
-				registered = 1;
+				registered = 2;
 			} else {
 				return userAvailable;
 			}
