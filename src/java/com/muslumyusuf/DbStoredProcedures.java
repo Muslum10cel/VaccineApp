@@ -36,5 +36,6 @@ public class DbStoredProcedures {
 	public static final String UPDATE_VACCINES = "{call db_9c4db8_dprtmnt.update_Vaccines(?,?)}";
 	public static final String GET_COMMENTS = "{call db_9c4db8_dprtmnt.getComment(?,?,?)}";
 	public static final String GET_BABIES = "{call db_9c4db8_dprtmnt.getBabies(?)}";
+	public static final String GET_ALL_VACCINE_NAMES = "{call db_9c4db8_dprtmnt.allVaccineNames()}";
 
 }
