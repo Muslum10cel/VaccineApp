@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -20,8 +20,8 @@ public class VaccineApp {
     private final static DBOperations dBOperations = new DBOperations();
 
     @WebMethod(operationName = "register")
-    public int register(@WebParam(name = "username") String username, @WebParam(name = "fullname") String fullname, @WebParam(name = "password") String password) {
-        return dBOperations.register(username, fullname, password);
+    public int register(@WebParam(name = "username") String username, @WebParam(name = "fullname") String fullname, @WebParam(name = "password") String password, @WebParam(name = "e_mail") String e_mail) {
+        return dBOperations.register(username, fullname, password, e_mail);
     }
 
     @WebMethod(operationName = "log_in")
@@ -90,27 +90,33 @@ public class VaccineApp {
         return dBOperations.forgottenPassword(username, newPassword);
     }
 
-    @Produces("application/json")
     @WebMethod(operationName = "getComment")
     public String comments(@WebParam(name = "vaccine_name") String vaccine_name, @WebParam(name = "beginning") int beginning, @WebParam(name = "end") int end) {
         return dBOperations.getComments(vaccine_name, beginning, end).toString();
     }
 
-    @Produces("application/json")
     @WebMethod(operationName = "getBabies")
     public String getBabies(@WebParam(name = "username") String username) {
         return dBOperations.getBabies(username).toString();
     }
 
-    @Produces("application/json")
     @WebMethod(operationName = "getAllVaccineNames")
     public String allVaccineNames() {
         return dBOperations.getAllVaccineNames().toString();
     }
 
-    @Produces("application/json")
     @WebMethod(operationName = "getBabyVaccineDetails")
     public String getBabyVaccineDetails(@WebParam(name = "baby_id") int baby_id) {
         return dBOperations.getVaccinesDetailsOfBaby(baby_id).toString();
+    }
+
+    @WebMethod(operationName = "sendVerificationCode")
+    public int sendVerificationCode(@WebParam(name = "e_mail") String e_mail) {
+        return dBOperations.sendMailToUser(e_mail);
+    }
+
+    @WebMethod(operationName = "validateVerificationCode")
+    public int validateVerifcationCode(@WebParam(name = "e_mail") String e_mail, @WebParam(name = "code") String code) {
+        return dBOperations.checkVerificationCode(e_mail, code);
     }
 }

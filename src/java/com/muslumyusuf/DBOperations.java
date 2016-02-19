@@ -5,6 +5,7 @@
  */
 package com.muslumyusuf;
 
+import com.initialize.GenerateVerificationCode;
 import com.initialize.Initialize;
 import com.mysql.jdbc.Connection;
 import java.io.UnsupportedEncodingException;
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 /**
  *
  * @author muslumoncel
+ * @version 1.0
  */
 public class DBOperations {
 
@@ -47,11 +49,15 @@ public class DBOperations {
     private final Integer[] VARICELLA_DATES = {360};
     private final Integer[] HEPATIT_A_DATES = {540, 720};
     private final Integer[] RVA_DATES = {60, 120, 180};
+    private final SendMail sendMail = new SendMail();
 
+    /**
+     * Establish connection to database
+     */
     private static void openConnection() {
         try {
-            Class.forName(Initialize.CLASS_NAME);
-            connection = (Connection) DriverManager.getConnection(Initialize.DB_URL, Initialize.USERNAME, Initialize.PASSWORD);
+            Class.forName(Initialize.getCLASS_NAME());
+            connection = (Connection) DriverManager.getConnection(Initialize.getDB_URL(), Initialize.getUSERNAME(), Initialize.getPASSWORD());
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,9 +70,10 @@ public class DBOperations {
      * @param username Username for registration
      * @param fullname Name and surname of user
      * @param password Password of user
+     * @param e_mail
      * @return Registration is successful or failed
      */
-    public synchronized int register(String username, String fullname, String password) {
+    public synchronized int register(String username, String fullname, String password, String e_mail) {
         int userAvailable = 0, registered = -1;
         try {
             openConnection();
@@ -85,7 +92,8 @@ public class DBOperations {
                 preparedStatement.setString(2, passToHash(password));
                 preparedStatement.setString(3, fullname);
                 preparedStatement.setInt(4, Flags.USER_FLAG);
-                preparedStatement.executeUpdate();
+                preparedStatement.setString(5, e_mail);
+                preparedStatement.executeQuery();
                 registered = 2;
             } else {
                 return userAvailable;
@@ -194,9 +202,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
-     * @param flag
-     * @return *
+     * Updates DABT IPA HIB vaccine of baby
+     *
+     * @param baby_id id of baby
+     * @param flag flag of vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_DaBT_IPA_HIB(int baby_id, int flag) {
         try {
@@ -223,7 +234,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.SIX_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -236,9 +247,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
-     * @param flag
-     * @return
+     * Updates HEPATITIS A vaccine of baby
+     *
+     * @param baby_id id of baby
+     * @param flag flag of vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_Hepatit_A(int baby_id, int flag) {
         try {
@@ -253,7 +267,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.TWO_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -265,9 +279,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
-     * @param flag
-     * @return
+     * Updates HEPATITIS B vaccine of baby
+     *
+     * @param baby_id id of baby
+     * @param flag flag of vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_Hepatit_B(int baby_id, int flag) {
         try {
@@ -285,7 +302,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.THREE_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -297,9 +314,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
-     * @param flag
-     * @return
+     * Updates KKK vaccine of baby
+     *
+     * @param baby_id id of baby
+     * @param flag flag of vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_KKK(int baby_id, int flag) {
         try {
@@ -314,7 +334,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.TWO_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -326,10 +346,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
+     * Updates KPA vaccine of baby
      *
-     * @param flag
-     * @return
+     * @param baby_id id of baby
+     * @param flag flag of vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_KPA(int baby_id, int flag) {
         try {
@@ -350,7 +372,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.FOUR_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -362,10 +384,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
+     * Updates OPA vaccine of baby
      *
-     * @param flag
-     * @return
+     * @param baby_id id of baby
+     * @param flag flag of vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_OPA(int baby_id, int flag) {
         try {
@@ -380,7 +404,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.TWO_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -392,10 +416,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
+     * Updates RVA vaccine of baby
      *
-     * @param flag
-     * @return
+     * @param baby_id id of baby
+     * @param flag flag of vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_RVA(int baby_id, int flag) {
         try {
@@ -413,7 +439,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.THREE_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -425,10 +451,12 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
+     * Updates baby vaccine such as BCG, VARICELLA
      *
-     * @param flag
-     * @return
+     * @param baby_id id of baby
+     * @param flag flag of related vaccine
+     * @return 1 updated, 0 not updated, -2 flag is not correct, -1 if catches
+     * SQLException
      */
     public synchronized int update_Vaccines(int baby_id, int flag) {
         try {
@@ -455,7 +483,7 @@ public class DBOperations {
                     callableStatement.setInt(2, Flags.SIX_FLAG);
                     break;
                 default:
-                    return 0;
+                    return -2;
             }
             return callableStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -467,11 +495,12 @@ public class DBOperations {
     }
 
     /**
-     * @param username
+     * Adds comment written by user
      *
-     * @param vaccine_name
-     * @param comment
-     * @return
+     * @param username of wrote comment
+     * @param vaccine_name commented vaccine name
+     * @param comment written comment
+     * @return 1 updated, 0 not updated, -1 if catches SQLException
      */
     public synchronized int addComment(String username, String vaccine_name, String comment) {
         try {
@@ -490,9 +519,11 @@ public class DBOperations {
     }
 
     /**
-     * @param baby_id
+     * Gets vaccine completion details of desired baby
      *
-     * @return
+     * @param baby_id of desired baby
+     * @return an object includes completion details of baby or null if catches
+     * SQLException or JSONException
      */
     public synchronized JSONObject completedAndIncompletedVaccines(int baby_id) {
         JSONObject jSONObject = new JSONObject();
@@ -543,14 +574,16 @@ public class DBOperations {
     }
 
     /**
-     * @param username
+     * Updates password of user
      *
-     * @param newPassword
-     * @return
+     * @param username wants to update password
+     * @param newPassword of user
+     * @return 1 updated, 0 not updated, -1 if catches SQLException, -2 if user
+     * not available
      */
     public synchronized int forgottenPassword(String username, String newPassword) {
         try {
-            int userAvailable = 0;
+            int userAvailable = -2;
             openConnection();
             preparedStatement = connection.prepareStatement(DbFunctions.CHECK_USER_FUNCTION);
             preparedStatement.setString(1, username);
@@ -577,12 +610,13 @@ public class DBOperations {
     }
 
     /**
-     * @param username
+     * Gets comments written by users
      *
      * @param vaccine_name
-     * @param beginning
-     * @param end
-     * @return
+     * @param beginning first index of comments
+     * @param end last index of comments
+     * @return an object includes comments or null if catches SQLException or
+     * JSONException
      */
     public synchronized JSONObject getComments(String vaccine_name, int beginning, int end) {
         JSONObject object = new JSONObject();
@@ -613,6 +647,13 @@ public class DBOperations {
         return null;
     }
 
+    /**
+     * Gets babies of logged in user
+     *
+     * @param username of logged in
+     * @return an object includes baby names of null if catches SQLException or
+     * JSONException
+     */
     public synchronized JSONObject getBabies(String username) {
         JSONObject jsonObject = new JSONObject();
         JSONArray jSONArray = new JSONArray();
@@ -639,7 +680,7 @@ public class DBOperations {
     }
 
     /**
-     * *
+     * Closes necessary objects
      */
     private void closeEverything() {
         try {
@@ -663,7 +704,9 @@ public class DBOperations {
     /**
      * Returns hashed string
      *
-     * @return SHA-512 encrypted password
+     * @param password user's password
+     * @return SHA-512 encrypted password or null if catches
+     * NoSuchAlgorithmException or UnsupportedEncodingException
      */
     private String passToHash(String password) {
         try {
@@ -678,7 +721,11 @@ public class DBOperations {
     }
 
     /**
+     * Calculates VARICELLA vaccines dates
      *
+     * @param date_of_birth of baby
+     * @return date of VARICELLA
+     * @throws ParseException
      */
     private String calculateVaricella(String dateTemp) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -690,7 +737,11 @@ public class DBOperations {
     }
 
     /**
+     * Calculates BCG vaccines dates
      *
+     * @param date_of_birth of baby
+     * @return date of BCG
+     * @throws ParseException
      */
     private String calculateBcg(String dateTemp) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -702,7 +753,12 @@ public class DBOperations {
     }
 
     /**
+     * Calculates DABT IPA HIB vaccines dates and create a callable statement
      *
+     * @param connection current connection
+     * @param date_of_birth of baby
+     * @return a callableStatement included necessary informations or null if
+     * catches SQLException or ParseException
      */
     private CallableStatement calculateDaBT_IPA_HIB(Connection connection, String date_of_birth) {
         try {
@@ -724,7 +780,12 @@ public class DBOperations {
     }
 
     /**
+     * Calculates HEPATITIS A vaccines dates and create a callable statement
      *
+     * @param connection current connection
+     * @param date_of_birth of baby
+     * @return a callableStatement included necessary informations or null if
+     * catches SQLException or ParseException
      */
     private CallableStatement calculateHepatit_A(Connection connection, String date_of_birth) {
         try {
@@ -746,7 +807,12 @@ public class DBOperations {
     }
 
     /**
+     * Calculates HEPATITIS B vaccines dates and create a callable statement
      *
+     * @param connection current connection
+     * @param date_of_birth of baby
+     * @return a callableStatement included necessary informations or null if
+     * catches SQLException or ParseException
      */
     private CallableStatement calculateHepatit_B(Connection connection, String date_of_birth) {
         try {
@@ -768,7 +834,12 @@ public class DBOperations {
     }
 
     /**
+     * Calculates KKK vaccines dates and create a callable statement
      *
+     * @param connection current connection
+     * @param date_of_birth of baby
+     * @return a callableStatement included necessary informations or null if
+     * catches SQLException or ParseException
      */
     private CallableStatement calculateKKK(Connection connection, String date_of_birth) {
         try {
@@ -790,7 +861,12 @@ public class DBOperations {
     }
 
     /**
+     * Calculates KPA vaccines dates and create a callable statement
      *
+     * @param connection current connection
+     * @param date_of_birth of baby
+     * @return a callableStatement included necessary informations or null if
+     * catches SQLException or ParseException
      */
     private CallableStatement calculateKPA(Connection connection, String date_of_birth) {
         try {
@@ -812,7 +888,12 @@ public class DBOperations {
     }
 
     /**
+     * Calculates OPA vaccines dates and create a callable statement
      *
+     * @param connection current connection
+     * @param date_of_birth of baby
+     * @return a callableStatement included necessary informations or null if
+     * catches SQLException or ParseException
      */
     private CallableStatement calculateOPA(Connection connection, String date_of_birth) {
         try {
@@ -834,7 +915,12 @@ public class DBOperations {
     }
 
     /**
+     * Calculates RVA vaccines dates and create a callable statement
      *
+     * @param connection current connection
+     * @param date_of_birth of baby
+     * @return a callableStatement included necessary informations or null if
+     * catches SQLException or ParseException
      */
     private CallableStatement calculateRVA(Connection connection, String date_of_birth) {
         try {
@@ -855,6 +941,12 @@ public class DBOperations {
         return null;
     }
 
+    /**
+     * Gets all vaccine names recorded to the database
+     *
+     * @return an object added vaccine names, null if catches SQLException or
+     * JSONException
+     */
     public JSONObject getAllVaccineNames() {
         JSONObject jSONObject = new JSONObject();
         JSONArray array = new JSONArray();
@@ -878,6 +970,13 @@ public class DBOperations {
         return null;
     }
 
+    /**
+     * Gets vaccine details of desired baby
+     *
+     * @param baby_id of desired baby for vaccination details
+     * @return an object added baby's vaccine details, null if catches
+     * SQLException or JSONException
+     */
     public JSONObject getVaccinesDetailsOfBaby(int baby_id) {
         JSONObject jSONObject = new JSONObject();
         try {
@@ -933,5 +1032,72 @@ public class DBOperations {
             closeEverything();
         }
         return null;
+    }
+
+    /**
+     * If user forgets his/her password this method will sent a verification
+     * code to the user's e-mail for changing password
+     *
+     * @param e_mail E-mail address of user
+     * @return 10 sent successfully, -2 if catches MessagingException
+     */
+    public synchronized int sendMailToUser(String e_mail) {
+        String verificationCode = GenerateVerificationCode.getVerificationCode();
+        if (!Objects.equals(updateVerificationCodeInDB(e_mail, verificationCode), 0)) {
+            return sendMail.sendMailTo(e_mail, verificationCode);
+        }
+        return -2;
+    }
+
+    /**
+     * After generating verification code with this method code will be inserted
+     * generated code to related database column of user
+     *
+     * @param e_mail E-mail address of user
+     * @param code Generated code
+     * @return 1 updated, 0 not updated, -1 if catches SQLException
+     */
+    private int updateVerificationCodeInDB(String e_mail, String code) {
+        try {
+            openConnection();
+            callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_VERIFICATION_CODE);
+            callableStatement.setString(1, e_mail);
+            callableStatement.setString(2, code);
+            return callableStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeEverything();
+        }
+        return -1;
+    }
+
+    /**
+     * Checks verification code is valid or not sent by system to user's e-mail
+     * address
+     *
+     * @param email E-mail address of user
+     * @param code Verification code sent by system
+     * @return 1 validated code, 0 not validated code, -2 if catches
+     * SQLException
+     */
+    public synchronized int checkVerificationCode(String email, String code) {
+        try {
+            openConnection();
+            preparedStatement = connection.prepareStatement(DbFunctions.VALIDATE_VERIFICATION_CODE);
+            preparedStatement.setString(1, code);
+            preparedStatement.setString(2, email);
+            resultSet = preparedStatement.executeQuery();
+            if (!Objects.equals(resultSet, null)) {
+                while (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeEverything();
+        }
+        return -2;
     }
 }
