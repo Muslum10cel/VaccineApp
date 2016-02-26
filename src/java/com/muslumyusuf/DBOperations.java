@@ -1116,7 +1116,7 @@ public class DBOperations {
      */
     public synchronized int uploadImage(String username, String fileName, byte[] imageBytes) {
         try {
-            if (!uploadToFTP(username,fileName, new ByteArrayInputStream(imageBytes))) {
+            if (!uploadToFTP(username, fileName, new ByteArrayInputStream(imageBytes))) {
                 return -2;
             }
             establishConnection();
@@ -1132,7 +1132,7 @@ public class DBOperations {
         return -1;
     }
 
-    private boolean uploadToFTP(String username,String fileName, InputStream inputStream) {
+    private boolean uploadToFTP(String username, String fileName, InputStream inputStream) {
         FTPClient client = new FTPClient();
         try {
             client.connect(Initialize.FTPClient());
