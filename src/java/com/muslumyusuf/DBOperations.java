@@ -708,25 +708,6 @@ public class DBOperations {
     }
 
     /**
-     * Returns hashed string
-     *
-     * @param password user's password
-     * @return SHA-512 encrypted password or null if catches
-     * NoSuchAlgorithmException or UnsupportedEncodingException
-     */
-    private String passToHash(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(password.getBytes("UTF-8"));
-            byte[] digest = md.digest();
-            return String.format("%064x", new java.math.BigInteger(1, digest));
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    /**
      * Calculates VARICELLA vaccines dates
      *
      * @param date_of_birth of baby
