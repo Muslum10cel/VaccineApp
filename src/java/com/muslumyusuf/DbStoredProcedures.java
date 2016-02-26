@@ -38,4 +38,5 @@ public class DbStoredProcedures {
     public static final String GET_BABIES = "{call db_9c4db8_dprtmnt.getBabies(?)}";
     public static final String GET_ALL_VACCINE_NAMES = "{call db_9c4db8_dprtmnt.allVaccineNames()}";
     public static final String UPDATE_VERIFICATION_CODE = "{call db_9c4db8_dprtmnt.updateVerificationCode(?,?)}";
+    public static final String UPDATE_IMAGE = "{call db_9c4db8_dprtmnt.updateImageURL(?,?)}";
 }

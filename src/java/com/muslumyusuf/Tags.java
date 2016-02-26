@@ -62,4 +62,6 @@ public class Tags {
 
     public static final String VERIFY = "Verification Code";
     public static final String VERIFICATION_CODE = "Your verification code is :";
+
+    public static final String SITE = "site1/";
 }

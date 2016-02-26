@@ -5,6 +5,7 @@
  */
 package com.muslumyusuf;
 
+import java.io.InputStream;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -118,5 +119,10 @@ public class VaccineApp {
     @WebMethod(operationName = "validateVerificationCode")
     public int validateVerifcationCode(@WebParam(name = "e_mail") String e_mail, @WebParam(name = "code") String code) {
         return dBOperations.checkVerificationCode(e_mail, code);
+    }
+
+    @WebMethod(operationName = "uploadImage")
+    public int uploadImage(@WebParam(name = "username") String username, @WebParam(name = "fileName") String fileName, @WebParam(name = "imagBytes") byte[] imageBytes) {
+        return dBOperations.uploadImage(username, fileName, imageBytes);
     }
 }

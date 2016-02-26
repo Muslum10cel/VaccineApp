@@ -8,6 +8,10 @@ package com.muslumyusuf;
 import com.initialize.GenerateVerificationCode;
 import com.initialize.Initialize;
 import com.mysql.jdbc.Connection;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +28,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +60,7 @@ public class DBOperations {
     /**
      * Establish connection to database
      */
-    private static void openConnection() {
+    private static void establishConnection() {
         try {
             Class.forName(Initialize.getCLASS_NAME());
             connection = (Connection) DriverManager.getConnection(Initialize.getDB_URL(), Initialize.getUSERNAME(), Initialize.getPASSWORD());
@@ -76,7 +82,7 @@ public class DBOperations {
     public synchronized int register(String username, String fullname, String password, String e_mail) {
         int userAvailable = 0, registered = -1;
         try {
-            openConnection();
+            establishConnection();
             preparedStatement = connection.prepareStatement(DbFunctions.CHECK_USER_FUNCTION);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
@@ -117,7 +123,7 @@ public class DBOperations {
     public synchronized int logIn(String username, String password) {
         int userAvailable = 0;
         try {
-            openConnection();
+            establishConnection();
             preparedStatement = connection.prepareStatement(DbFunctions.CHECK_USER_FUNCTION);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
@@ -158,7 +164,7 @@ public class DBOperations {
      */
     public synchronized int addBaby(String username, String baby_name, String date_of_birth) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.ADD_BABY);
             callableStatement.setString(1, username);
             callableStatement.setString(2, baby_name);
@@ -211,7 +217,7 @@ public class DBOperations {
      */
     public synchronized int update_DaBT_IPA_HIB(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_DaBT_IPA_HIB);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -256,7 +262,7 @@ public class DBOperations {
      */
     public synchronized int update_Hepatit_A(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_HEPATIT_A);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -288,7 +294,7 @@ public class DBOperations {
      */
     public synchronized int update_Hepatit_B(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_HEPATIT_B);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -323,7 +329,7 @@ public class DBOperations {
      */
     public synchronized int update_KKK(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KKK);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -355,7 +361,7 @@ public class DBOperations {
      */
     public synchronized int update_KPA(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_KPA);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -393,7 +399,7 @@ public class DBOperations {
      */
     public synchronized int update_OPA(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_OPA);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -425,7 +431,7 @@ public class DBOperations {
      */
     public synchronized int update_RVA(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_RVA);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -460,7 +466,7 @@ public class DBOperations {
      */
     public synchronized int update_Vaccines(int baby_id, int flag) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_VACCINES);
             callableStatement.setInt(1, baby_id);
             switch (flag) {
@@ -504,7 +510,7 @@ public class DBOperations {
      */
     public synchronized int addComment(String username, String vaccine_name, String comment) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.ADD_COMMENT);
             callableStatement.setString(1, username.trim());
             callableStatement.setString(2, vaccine_name.trim());
@@ -528,7 +534,7 @@ public class DBOperations {
     public synchronized JSONObject completedAndIncompletedVaccines(int baby_id) {
         JSONObject jSONObject = new JSONObject();
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.GET_COMPLETED_VACCINES);
             callableStatement.setInt(1, baby_id);
             resultSet = callableStatement.executeQuery();
@@ -584,7 +590,7 @@ public class DBOperations {
     public synchronized int forgottenPassword(String username, String newPassword) {
         try {
             int userAvailable = -2;
-            openConnection();
+            establishConnection();
             preparedStatement = connection.prepareStatement(DbFunctions.CHECK_USER_FUNCTION);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
@@ -622,7 +628,7 @@ public class DBOperations {
         JSONObject object = new JSONObject();
         JSONArray jSONArray = new JSONArray();
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.GET_COMMENTS);
             callableStatement.setString(1, vaccine_name);
             callableStatement.setInt(2, beginning);
@@ -658,7 +664,7 @@ public class DBOperations {
         JSONObject jsonObject = new JSONObject();
         JSONArray jSONArray = new JSONArray();
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.GET_BABIES);
             callableStatement.setString(1, username);
             resultSet = callableStatement.executeQuery();
@@ -951,7 +957,7 @@ public class DBOperations {
         JSONObject jSONObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.GET_ALL_VACCINE_NAMES);
             resultSet = callableStatement.executeQuery();
             if (!Objects.equals(resultSet, null)) {
@@ -980,7 +986,7 @@ public class DBOperations {
     public JSONObject getVaccinesDetailsOfBaby(int baby_id) {
         JSONObject jSONObject = new JSONObject();
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.GET_BABY_VACCINES);
             callableStatement.setInt(1, baby_id);
             resultSet = callableStatement.executeQuery();
@@ -1059,7 +1065,7 @@ public class DBOperations {
      */
     private int updateVerificationCodeInDB(String e_mail, String code) {
         try {
-            openConnection();
+            establishConnection();
             callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_VERIFICATION_CODE);
             callableStatement.setString(1, e_mail);
             callableStatement.setString(2, code);
@@ -1083,7 +1089,7 @@ public class DBOperations {
      */
     public synchronized int checkVerificationCode(String email, String code) {
         try {
-            openConnection();
+            establishConnection();
             preparedStatement = connection.prepareStatement(DbFunctions.VALIDATE_VERIFICATION_CODE);
             preparedStatement.setString(1, code);
             preparedStatement.setString(2, email);
@@ -1099,5 +1105,56 @@ public class DBOperations {
             closeEverything();
         }
         return -2;
+    }
+
+    /**
+     *
+     * @param username
+     * @param fileName
+     * @param imageBytes
+     * @return
+     */
+    public synchronized int uploadImage(String username, String fileName, byte[] imageBytes) {
+        try {
+            if (!uploadToFTP(fileName, new ByteArrayInputStream(imageBytes))) {
+                return -2;
+            }
+            establishConnection();
+            callableStatement = connection.prepareCall(DbStoredProcedures.UPDATE_IMAGE);
+            callableStatement.setString(1, Initialize.imageFTPPath() + fileName);
+            callableStatement.setString(2, username);
+            return callableStatement.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeEverything();
+        }
+        return -1;
+    }
+
+    private boolean uploadToFTP(String fileName, InputStream inputStream) {
+        FTPClient client = new FTPClient();
+        try {
+            client.connect(Initialize.FTPClient());
+            if (client.login(Initialize.FTPUsername(), Initialize.getPASSWORD())) {
+                client.setDefaultTimeout(10000);
+                client.setFileType(FTPClient.BINARY_FILE_TYPE);
+                if (client.storeFile(Tags.SITE + fileName, inputStream)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            if (client.isConnected()) {
+                try {
+                    client.logout();
+                    client.disconnect();
+                } catch (IOException ex) {
+                    Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return false;
     }
 }
