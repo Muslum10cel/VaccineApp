@@ -5,11 +5,11 @@
  */
 package com.muslumyusuf;
 
+
 import com.initialize.GenerateVerificationCode;
 import com.initialize.Initialize;
 import com.mysql.jdbc.Connection;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -29,7 +29,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
